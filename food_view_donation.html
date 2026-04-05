@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{{ donation.food_type | replace('_', ' ') | title }} — FoodRescue{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <a href="{{ url_for('browse') }}" class="text-muted text-decoration-none mb-3 d-block"><i class="bi bi-arrow-left me-1"></i>Back to Browse</a>
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <span class="badge bg-success fs-6">{{ donation.food_type | replace('_', ' ') | title }}</span>
+                        <span class="badge bg-{{ 'success' if donation.status == 'available' else 'secondary' }}">{{ donation.status | title }}</span>
+                    </div>
+                    <h3>{{ donation.description }}</h3>
+                    <hr>
+                    <div class="row g-3">
+                        <div class="col-md-6"><strong><i class="bi bi-box me-2"></i>Quantity:</strong> {{ donation.quantity }}</div>
+                        <div class="col-md-6"><strong><i class="bi bi-geo-alt me-2"></i>City:</strong> {{ donation.city }}</div>
+                        <div class="col-md-6"><strong><i class="bi bi-pin-map me-2"></i>Pickup:</strong> {{ donation.pickup_address }}</div>
+                        <div class="col-md-6"><strong><i class="bi bi-clock me-2"></i>Expires:</strong> {{ donation.expiry_time }}</div>
+                        <div class="col-md-6"><strong><i class="bi bi-person me-2"></i>Donor:</strong> {{ donation.donor_name }}</div>
+                        {% if donation.organization %}<div class="col-md-6"><strong><i class="bi bi-building me-2"></i>Organization:</strong> {{ donation.organization }}</div>{% endif %}
+                    </div>
+                    {% if donation.status == 'available' and current_user and current_user.id != donation.donor_id %}
+                    <hr>
+                    <form method="POST" action="{{ url_for('claim_donation', donation_id=donation.id) }}">
+                        <button type="submit" class="btn btn-success btn-lg w-100"><i class="bi bi-hand-thumbs-up me-2"></i>Claim This Donation</button>
+                    </form>
+                    {% elif donation.status == 'claimed' %}
+                    <hr>
+                    <div class="alert alert-info mb-0"><i class="bi bi-check-circle me-2"></i>Claimed by <strong>{{ donation.claimed_by_name }}</strong></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

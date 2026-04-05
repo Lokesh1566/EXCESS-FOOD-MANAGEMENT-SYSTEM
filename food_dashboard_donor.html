@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Donor Dashboard — FoodRescue{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0">My Donations</h2>
+        <a href="{{ url_for('create_donation') }}" class="btn btn-success"><i class="bi bi-plus-circle me-2"></i>New Donation</a>
+    </div>
+    {% if donations %}
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-dark"><tr><th>Food</th><th>Quantity</th><th>City</th><th>Status</th><th>Claimed By</th><th>Actions</th></tr></thead>
+            <tbody>
+            {% for d in donations %}
+            <tr>
+                <td><span class="badge bg-success me-2">{{ d.food_type | replace('_', ' ') | title }}</span></td>
+                <td>{{ d.quantity }}</td>
+                <td>{{ d.city }}</td>
+                <td><span class="badge bg-{{ 'success' if d.status == 'available' else 'secondary' }}">{{ d.status }}</span></td>
+                <td>{{ d.claimed_by_name or '—' }}</td>
+                <td>
+                    <a href="{{ url_for('view_donation', donation_id=d.id) }}" class="btn btn-sm btn-outline-primary">View</a>
+                    {% if d.status == 'available' %}
+                    <form method="POST" action="{{ url_for('cancel_donation', donation_id=d.id) }}" class="d-inline">
+                        <button class="btn btn-sm btn-outline-danger">Remove</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="text-center py-5 text-muted">
+        <i class="bi bi-inbox" style="font-size:3rem"></i>
+        <p class="mt-2">No donations yet. <a href="{{ url_for('create_donation') }}">Create your first one!</a></p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

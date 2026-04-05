@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Browse Donations — FoodRescue{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="fw-bold mb-4">Available Donations</h2>
+    <form class="row g-3 mb-4" method="GET">
+        <div class="col-md-4">
+            <input type="text" name="city" class="form-control" placeholder="Filter by city..." value="{{ city_filter }}">
+        </div>
+        <div class="col-md-3">
+            <select name="food_type" class="form-select">
+                <option value="">All Food Types</option>
+                <option value="cooked_meal" {{ 'selected' if food_filter == 'cooked_meal' }}>Cooked Meals</option>
+                <option value="vegetables" {{ 'selected' if food_filter == 'vegetables' }}>Vegetables</option>
+                <option value="fruits" {{ 'selected' if food_filter == 'fruits' }}>Fruits</option>
+                <option value="bakery" {{ 'selected' if food_filter == 'bakery' }}>Bakery</option>
+                <option value="packaged" {{ 'selected' if food_filter == 'packaged' }}>Packaged</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-success w-100"><i class="bi bi-search me-1"></i>Search</button>
+        </div>
+    </form>
+    {% if donations %}
+    <div class="row g-4">
+        {% for d in donations %}
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="badge bg-success">{{ d.food_type | replace('_', ' ') | title }}</span>
+                        <small class="text-muted"><i class="bi bi-geo-alt"></i> {{ d.city }}</small>
+                    </div>
+                    <h6>{{ d.description[:100] }}{% if d.description|length > 100 %}...{% endif %}</h6>
+                    <p class="text-muted small"><i class="bi bi-box me-1"></i>{{ d.quantity }} | <i class="bi bi-person me-1"></i>{{ d.donor_name }}</p>
+                    <a href="{{ url_for('view_donation', donation_id=d.id) }}" class="btn btn-sm btn-outline-success">View & Claim</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5 text-muted">
+        <i class="bi bi-inbox" style="font-size: 3rem"></i>
+        <p class="mt-2">No donations found. Try adjusting your filters.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

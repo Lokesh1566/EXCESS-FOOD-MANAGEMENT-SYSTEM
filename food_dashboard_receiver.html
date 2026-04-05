@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Receiver Dashboard — FoodRescue{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="fw-bold mb-4">Available Donations Near You</h2>
+    {% if available %}
+    <div class="row g-4 mb-5">
+        {% for d in available %}
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body">
+                    <span class="badge bg-success mb-2">{{ d.food_type | replace('_', ' ') | title }}</span>
+                    <h6>{{ d.description[:80] }}...</h6>
+                    <p class="text-muted small"><i class="bi bi-box"></i> {{ d.quantity }} | <i class="bi bi-geo-alt"></i> {{ d.city }}</p>
+                    <a href="{{ url_for('view_donation', donation_id=d.id) }}" class="btn btn-sm btn-success">View & Claim</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted">No donations available right now. Check back soon!</p>
+    {% endif %}
+    <h3 class="fw-bold mt-5 mb-3">My Claimed Donations</h3>
+    {% if claimed %}
+    <div class="table-responsive">
+        <table class="table table-hover"><thead class="table-dark"><tr><th>Food</th><th>Quantity</th><th>Donor</th><th>Claimed At</th></tr></thead>
+        <tbody>{% for d in claimed %}<tr><td>{{ d.food_type | replace('_', ' ') | title }}</td><td>{{ d.quantity }}</td><td>{{ d.donor_name }}</td><td>{{ d.claimed_at }}</td></tr>{% endfor %}</tbody></table>
+    </div>
+    {% else %}<p class="text-muted">You haven't claimed any donations yet.</p>{% endif %}
+</div>
+{% endblock %}
