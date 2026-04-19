@@ -33,7 +33,7 @@ python app.py
 # → http://localhost:5000
 ```
 
-The app seeds demo data on first run — 4 users and 5 donations so you can explore immediately.
+The app seeds demo data on first run 4 users and 5 donations so you can explore immediately.
 
 **Demo accounts:**
 | Role | Email | Password |
@@ -71,7 +71,7 @@ EXCESS-FOOD-MANAGEMENT-SYSTEM/
 
 **For donors:**
 - List surplus food with type, quantity, description, and pickup details
-- Set expiry window (2h to 48h) — listings auto-expire
+- Set expiry window (2h to 48h) listings auto-expire
 - Track which NGO claimed your donation
 - Manage and remove listings from dashboard
 
@@ -82,7 +82,7 @@ EXCESS-FOOD-MANAGEMENT-SYSTEM/
 - Track claimed donation history
 
 **System:**
-- Role-based authentication (donor vs receiver)
+- Role based authentication (donor vs receiver)
 - Password hashing with Werkzeug
 - SQLite database (zero config, works out of the box)
 - Responsive Bootstrap 5 UI
