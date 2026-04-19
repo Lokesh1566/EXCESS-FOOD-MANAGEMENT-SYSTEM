@@ -18,8 +18,8 @@ A full-stack web platform that connects surplus food donors (restaurants, catere
 
 - **Donors** (restaurants, caterers, individuals) list surplus food with quantity, pickup address, and expiry time
 - **Receivers** (NGOs, shelters, community kitchens) browse available donations nearby and claim them
-- Real-time availability tracking — expired listings auto-hide
-- City and food-type filtering for quick discovery
+- Real time availability tracking expired listings auto-hide
+- City and food type filtering for quick discovery
 - Contact info exchange on claim for pickup coordination
 - REST API endpoints for future mobile app integration
 
