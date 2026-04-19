@@ -1,4 +1,4 @@
-# 🍽️ FoodRescue — Excess Food Management System
+#FoodRescue - Excess Food Management System
 
 A full-stack web platform that connects surplus food donors (restaurants, caterers, individuals) with NGOs and communities who need it. Reducing food waste, one donation at a time.
 
